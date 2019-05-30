@@ -5,6 +5,7 @@
 package it.polito.tdp.newufosightings;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.newufosightings.model.Model;
@@ -52,10 +53,43 @@ public class NewUfoSightingsController {
 	@FXML
 	void doCreaGrafo(ActionEvent event) {
 
+		try {
+			int year = Integer.parseInt(txtAnno.getText());
+			String shape = cmbBoxForma.getValue();
+			
+			if (year>=1910 && year<=2014) {
+				
+				
+				model.creaGrafo(year,shape);
+				
+			}
+			else txtResult.appendText("Inserire un valore compreso tra 1910 e 2014"+"\n");
+			
+			
+		}catch(NumberFormatException nbe) {
+			txtResult.appendText("Inserire un valore vaido"+"\n");
+		}
+
+		
 	}
 
 	@FXML
 	void doSelezionaAnno(ActionEvent event) {
+		
+		try {
+			int year = Integer.parseInt(txtAnno.getText());
+			
+			if (year>=1910 && year<=2014) {
+				List<String> shapes = model.loadAllShapes(year);
+				cmbBoxForma.getItems().addAll(shapes);
+				txtResult.appendText("Shapes caricate"+"\n");
+			}
+			else txtResult.appendText("Inserire un valore compreso tra 1910 e 2014"+"\n");
+			
+			
+		}catch(NumberFormatException nbe) {
+			txtResult.appendText("Inserire un valore vaido"+"\n");
+		}
 
 	}
 
